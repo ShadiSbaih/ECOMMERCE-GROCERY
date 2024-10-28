@@ -1,23 +1,23 @@
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import User from "../models/user.model.js";
 
 export const adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
-
     if (!email || !password)
       return res
         .status(400)
         .json({ message: "All fields are required", success: false });
 
-    if (
-      email !== process.env.ADMIN_EMAIL ||
-      password !== process.env.ADMIN_PASSWORD
-    ) {
+    const admin = await User.findOne({ email: email.toLowerCase(), role: "admin" });
+    const isValidPassword = admin && await bcrypt.compare(password, admin.password);
+
+    if (!isValidPassword) {
       return res.json({ message: "Invalid credentials", success: false });
     }
 
-    const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ email: admin.email, role: admin.role }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
     res.cookie("token", token, {

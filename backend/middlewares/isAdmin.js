@@ -8,7 +8,7 @@ export const isAdmin = (req, res, next) => {
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    if (decoded.email !== process.env.ADMIN_EMAIL) {
+    if (decoded.role !== "admin") {
       return res.status(401).json({ message: "Unauthorized" });
     }
     req.admin = decoded;

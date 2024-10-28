@@ -22,6 +22,7 @@ export const signup = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      role: "user",
     });
 
     return res
@@ -54,7 +55,7 @@ export const login = async (req, res) => {
         .status(400)
         .json({ message: "Invalid credentials", success: false });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
