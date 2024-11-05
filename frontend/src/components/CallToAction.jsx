@@ -1,45 +1,42 @@
 import { assets } from "../assets/assets";
-import { motion } from "motion/react";
+import { useContext } from "react";
+import { ArrowRight } from "lucide-react";
+import { AppContext } from "../context/AppContext";
+
 const CallToAction = () => {
+  const { navigate } = useContext(AppContext);
+
   return (
-    <div>
-      <div className="flex flex-col md:flex-row items-center justify-between  gap-4">
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="bg-[#FDF5F1] flex flex-col md:flex-row gap-5 items-center justify-between p-4 rounded-2xl"
-        >
-          <div className="flex flex-col gap-3">
-            <h1 className="text-primary text-2xl font-bold uppercase">
-              Healty Organic Fruits
-            </h1>
-            <h2 className="text-2xl font-semibold text-secondary">
-              Get 20% Flat Off
-            </h2>
-            <button className="px-6 py-3 bg-secondary text-white hover:bg-primary transition-all ease-in-out duration-300 cursor-pointer">
-              View all items
+    <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8 md:py-16">
+      <div className="border-y border-[#d8e0d4] lg:grid lg:grid-cols-2">
+        <article className="relative grid min-h-[260px] grid-cols-[1fr_0.9fr] items-center gap-4 overflow-hidden border-b border-[#d8e0d4] py-8 pr-5 sm:pr-10 lg:border-b-0 lg:border-r">
+          <div className="relative z-10">
+            <p className="text-xs font-semibold text-primary">01 · Fruit</p>
+            <h2 className="mt-4 max-w-xs text-2xl font-semibold leading-tight tracking-[-0.03em] text-[#193b2a] sm:text-3xl">Sweet things for the week ahead.</h2>
+            <button type="button" onClick={() => navigate("/shop?category=Fruits")} className="mt-6 inline-flex items-center gap-2 border-b border-primary pb-1 text-sm font-semibold text-secondary hover:text-primary">
+              Browse fruit <ArrowRight size={15} />
             </button>
           </div>
-          <img src={assets.organic_fruits} alt="" className="w-1/2" />
-        </motion.div>
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="bg-[#EEF9FC] flex flex-col md:flex-row gap-5 items-center justify-between p-4 rounded-2xl"
-        >
-          <div className="flex flex-col gap-3">
-            <h1 className="text-primary text-2xl font-bold uppercase">
-              Get 10% Flat Offer on
-            </h1>
-            <h2 className="text-2xl font-semibold text-secondary">
-              Fresh Organic Vegetables
-            </h2>
-            <button className="px-6 py-3 bg-secondary text-white hover:bg-primary transition-all ease-in-out duration-300 cursor-pointer">
-              View all items
+          <div className="flex h-full min-h-48 items-end justify-center bg-[#f7efe3] px-2">
+            <img src={assets.organic_fruits} alt="Fresh seasonal fruit" className="w-full max-w-[260px] object-contain" />
+          </div>
+        </article>
+
+        <article className="relative grid min-h-[260px] grid-cols-[1fr_0.9fr] items-center gap-4 overflow-hidden py-8 pl-0 sm:pl-10">
+          <div className="relative z-10">
+            <p className="text-xs font-semibold text-primary">02 · Vegetables</p>
+            <h2 className="mt-4 max-w-xs text-2xl font-semibold leading-tight tracking-[-0.03em] text-[#193b2a] sm:text-3xl">Greens for tonight’s dinner.</h2>
+            <button type="button" onClick={() => navigate("/shop?category=Vegetables")} className="mt-6 inline-flex items-center gap-2 border-b border-primary pb-1 text-sm font-semibold text-secondary hover:text-primary">
+              Browse vegetables <ArrowRight size={15} />
             </button>
           </div>
-          <img src={assets.organic_fruits} alt="" className="w-1/2" />
-        </motion.div>
+          <div className="flex h-full min-h-48 items-end justify-center bg-[#e8f0e4] px-2">
+            <img src={assets.organic_vegetables} alt="Fresh seasonal vegetables" className="w-full max-w-[260px] object-contain" />
+          </div>
+        </article>
       </div>
-    </div>
+    </section>
   );
 };
+
 export default CallToAction;
