@@ -14,8 +14,9 @@ import Checkout from "./pages/Checkout";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 import Footer from "./components/Footer";
-import { useContext } from "react";
+import { useCallback, useContext, useState } from "react";
 import { AppContext } from "./context/AppContext";
+import SplashScreen from "./components/SplashScreen";
 
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -26,8 +27,13 @@ import Orders from "./pages/admin/Orders";
 import AddProduct from "./pages/admin/AddProduct";
 import AddCategory from "./pages/admin/AddCategory";
 const App = () => {
+  const [isSplashVisible, setSplashVisible] = useState(true);
   const adminPath = useLocation().pathname.includes("admin");
   const { admin } = useContext(AppContext);
+  const finishSplash = useCallback(() => setSplashVisible(false), []);
+
+  if (isSplashVisible) return <SplashScreen onComplete={finishSplash} />;
+
   return (
     <>
       <Toaster />
