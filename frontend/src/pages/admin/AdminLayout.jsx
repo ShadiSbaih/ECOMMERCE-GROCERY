@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { AppContext } from "../../context/AppContext";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import {
   Grid3X3,
@@ -9,8 +8,11 @@ import {
   Plus,
   ShoppingCart,
   X,
+  LogOut,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { AppContext } from "../../context/AppContext";
+import { assets } from "../../assets/assets.js";
 
 const AdminLayout = () => {
   const { setAdmin, navigate, axios } = useContext(AppContext);
@@ -24,12 +26,12 @@ const AdminLayout = () => {
     { path: "/admin/products", name: "All Products", icon: Grid3X3 },
     { path: "/admin/orders", name: "Orders", icon: ShoppingCart },
   ];
-  const isActive = (path, exact = false) => {
-    if (exact) {
-      return location.pathname === path;
-    }
-    return location.pathname === path;
-  };
+  const activeItem = menuItems.find((item) =>
+    item.exact
+      ? location.pathname === item.path
+      : location.pathname === item.path,
+  );
+
   const logout = async () => {
     try {
       const { data } = await axios.get("/api/admin/logout");
@@ -37,109 +39,85 @@ const AdminLayout = () => {
         toast.success(data.message);
         setAdmin(false);
         navigate("/");
-      } else {
-        toast.error(data.message);
-      }
+      } else toast.error(data.message);
     } catch (error) {
       toast.error(error.message);
     }
   };
+
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Mobile menu button */}
-      <div className="lg:hidden fixed top-4 left-4 z-50 ">
-        <button className="p-2 rounded-md bg-white hover:bg-gray-50 transition-colors">
-          {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-      {/* Sidebar */}
-      <div
-        className={`
-        fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out
-        lg:translate-x-0 lg:static lg:inset-0
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-      `}
+    <div className="flex h-screen bg-[#f3f5ef] text-[#193b2a]">
+      <button
+        type="button"
+        onClick={() => setSidebarOpen((value) => !value)}
+        className="fixed left-4 top-4 z-50 border border-[#d5dfd2] bg-[#fbfaf5] p-2 text-secondary lg:hidden"
+        aria-label="Toggle admin navigation"
       >
-        <div className="flex flex-col h-full">
-          {/* Logo/Header */}
-          <div className="flex items-center justify-center h-16 px-4 bg-primary text-white">
-            <h1>Admin Panel</h1>
-          </div>
-
-          {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-            {menuItems.map((item, index) => {
-              const Icon = item.icon;
-              const active = isActive(item.path, item.exact);
-              return (
-                <Link
-                  key={index}
-                  to={item.path}
-                  onClick={() => setSidebarOpen(false)}
-                  className={`
-                    flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200
-                    ${
-                      active
-                        ? "bg-blue-100 text-primary border-r-4 border-primary"
-                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                    }
-                  `}
-                >
-                  <Icon size={20} className="mr-3" />
-                  {item.name}
-                </Link>
-              );
-            })}
-          </nav>
-          {/* Footer */}
-          <div className="p-4 border-t border-gray-200">
-            <div className="flex items-center text-sm text-gray-500">
-              <div className="w-8 h-8 bg-gray-300 rounded-full mr-3">
-                <div>
-                  <div className="font-medium text-gray-800">Admin User</div>
-                  <div>admin@example.com</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile overlay */}
+        {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
       {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-30 bg-black  bg-opacity-50"
+        <button
+          type="button"
+          className="fixed inset-0 z-30 bg-[#193b2a]/30 lg:hidden"
           onClick={() => setSidebarOpen(false)}
-        ></div>
+          aria-label="Close navigation"
+        />
       )}
 
-      {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden lg:ml-0">
-        {/* Top bar */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-[#d5dfd2] bg-[#fbfaf5] transition-transform lg:static lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        <div className="border-b border-[#d5dfd2] px-6 py-5">
+          <img
+            src={assets.logo}
+            alt="The Green Grocer"
+            className="h-12 w-auto"
+          />
+       
+        </div>
+        <nav className="flex-1 space-y-1 px-3 py-6">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            const active = activeItem?.path === item.path;
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                onClick={() => setSidebarOpen(false)}
+                className={`flex items-center gap-3 border-l-2 px-3 py-3 text-sm font-medium transition-colors ${active ? "border-primary bg-[#eef3e9] text-secondary" : "border-transparent text-[#55705d] hover:border-[#b8c7b9] hover:bg-[#f3f5ef] hover:text-[#193b2a]"}`}
+              >
+                <Icon size={18} strokeWidth={1.8} />
+                {item.name}
+              </Link>
+            );
+          })}
+        </nav>
+        <div className="border-t border-[#d5dfd2] p-5">
+        
+          <button
+            type="button"
+            onClick={logout}
+            className="mt-4 inline-flex items-center gap-2 text-sm text-[#a14d42] hover:text-primary"
+          >
+            <LogOut size={15} /> Sign out
+          </button>
+        </div>
+      </aside>
 
-        <header className="bg-white shadow-sm border-b border-gray-200 lg:pl-0 pl-16">
-          <div className="flex items-center justify-between px-6 py-4">
-            <h2 className="text-2xl font-semibold text-gray-800">
-              {menuItems.find((item) => isActive(item.path, item.exact))
-                ?.name || "Admin Panel"}
-            </h2>
-            <div className="hidden md:flex items-center spaxe-x-4">
-              <div className="text-sm text-gray-500">
-                <p
-                  onClick={logout}
-                  className="cursor-pointer hover:underline text-red-500 text-lg font-semibold"
-                >
-                  logout
-                </p>
-              </div>
-            </div>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="flex h-[72px] shrink-0 items-center justify-between border-b border-[#d5dfd2] bg-[#fbfaf5] px-6 pl-16 lg:px-10">
+          <div>
+          
+            <h1 className="mt-1 text-lg font-semibold text-[#193b2a]">
+              {activeItem?.name || "Admin"}
+            </h1>
           </div>
+          <span className="hidden text-sm text-[#55705d] sm:block">
+            Good work starts with a clear shelf.
+          </span>
         </header>
-
-        {/* Page content */}
-
-        <main className="flex-1 overflow-x-hidden overflow-y-auto p-6">
-          <div className="max-w-7xl mx-auto">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto px-6 py-8 lg:px-10">
+          <div className="mx-auto max-w-7xl">
             <Outlet />
           </div>
         </main>
@@ -147,4 +125,5 @@ const AdminLayout = () => {
     </div>
   );
 };
+
 export default AdminLayout;
