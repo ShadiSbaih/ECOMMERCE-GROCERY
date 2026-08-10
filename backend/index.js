@@ -1,4 +1,6 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
@@ -11,6 +13,10 @@ import productRouter from "./routes/product.routes.js";
 import addressRouter from "./routes/address.routes.js";
 import orderRouter from "./routes/order.routes.js";
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadsPath = path.join(__dirname, "uploads");
+const frontendAssetsPath = path.join(__dirname, "..", "frontend", "src", "assets");
 
 connectDB();
 // middlewares
@@ -20,7 +26,11 @@ app.use(cookieParser());
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-app.use("/uploads", express.static("uploads"));
+// Resolve paths from this file, not from the shell's current directory.
+// The second mount keeps seeded legacy filenames working while new uploads
+// continue to live in backend/uploads.
+app.use("/uploads", express.static(uploadsPath));
+app.use("/uploads", express.static(frontendAssetsPath));
 app.use("/api/auth", authRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/category", categoryRouter);
