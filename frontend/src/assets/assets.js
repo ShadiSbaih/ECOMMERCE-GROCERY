@@ -1,13 +1,19 @@
 // general images
-import banner from "./banner.webp";
+import banner from "./organic_banner.svg";
 import app_store from "./app_store.png";
 import play_store from "./play_store.png";
 import footer_img from "./footer_img.png";
 import fruits_right from "./fruits_right.webp";
-import logo from "./logo.svg";
-import hero_img1 from "./hero_img1.webp";
-import hero_img2 from "./hero_img2.webp";
-import hero_img3 from "./hero_img3.webp";
+import logo from "./logo.png";
+import verdant_logo from "./logo.png";
+import verdant_hero from "./verdant_hero.png";
+
+import organic_avocado from "./organic_avocado.png";
+import organic_strawberries from "./organic_strawberries.png";
+
+import hero_img1 from "./new_person_1.png";
+import hero_img2 from "./new_person_2.png";
+import hero_img3 from "./new_person_3.png";
 import hero_left_img from "./hero_left_img.webp";
 import leef_layer_bg from "./leef_layer_bg.png";
 import payment from "./payment.png";
@@ -16,18 +22,20 @@ import vegetables_left from "./vegetables_left.webp";
 import organic_fruits from "./organic_fruits.webp";
 import organic_vegetables from "./organic_vegetables.webp";
 import profile_pic from "./profile_pic.webp";
-import about_hero from "./about_hero.webp";
+import about_hero from "./about_hero.png";
+import login_illustration from "./login_illustration.png";
+import grocery_pattern from "./grocery_pattern.png";
 // blogs images
 import blog_1 from "./blog_1.webp";
-import blog_2 from "./blog_2.webp";
-import blog_3 from "./blog_3.webp";
+import blog_2 from "./blog_2_real.png";
+import blog_3 from "./blog_3_real.png";
 
 // brands logo
-import brand_1 from "./brand_1.webp";
-import brand_2 from "./brand_2.webp";
-import brand_3 from "./brand_3.webp";
-import brand_4 from "./brand_4.webp";
-import brand_5 from "./brand_5.webp";
+import brand_1 from "./new_brand_1.png";
+import brand_2 from "./new_brand_2.png";
+import brand_3 from "./new_brand_3.png";
+import brand_4 from "./new_brand_4.png";
+import brand_5 from "./new_brand_5.png";
 
 // categories
 import dry_fruit from "./dry_fruit.webp";
@@ -75,6 +83,8 @@ export const assets = {
   footer_img,
   fruits_right,
   logo,
+  verdant_logo,
+  verdant_hero,
   hero_img1,
   hero_img2,
   hero_img3,
@@ -87,6 +97,8 @@ export const assets = {
   organic_vegetables,
   profile_pic,
   about_hero,
+  login_illustration,
+  grocery_pattern,
 };
 export const categories = [
   { _id: 1, image: dry_fruit, name: "Dry Fruits" },
@@ -99,6 +111,30 @@ export const categories = [
   { _id: 8, image: rice, name: "Rice" },
 ];
 export const products = [
+  {
+    _id: 101,
+    name: "Organic Hass Avocados",
+    price: 5.99,
+    offerPrice: 4.49,
+    smallDesc: "Creamy, nutrient-rich organic avocados.",
+    longDesc:
+      "Hand-selected organic Hass avocados, grown with sustainable farming practices. Creamy texture and rich taste, perfect for toast, guacamole, and salads.",
+    weight: "2 Pack",
+    category: "Vegetables",
+    images: [organic_avocado, organic_avocado],
+  },
+  {
+    _id: 102,
+    name: "Fresh Organic Strawberries",
+    price: 6.99,
+    offerPrice: 5.29,
+    smallDesc: "Sweet, juicy hand-picked berries.",
+    longDesc:
+      "Vibrant red organic strawberries bursting with natural sweetness. Packed with antioxidants, vitamin C, and rich flavor.",
+    weight: "400g",
+    category: "Fruits",
+    images: [organic_strawberries, organic_strawberries],
+  },
   {
     _id: 1,
     name: "Organic Cashews",
@@ -242,16 +278,16 @@ export const blogs = [
   {
     _id: 2,
     image: blog_2,
-    title: "Top 10 Superfoods You Should Include in Your Diet",
+    title: "The five-minute ritual that makes vegetables last",
     date: "September 10, 2023",
-    desc: "Explore the top 10 superfoods that can boost your health and vitality. From antioxidant-rich berries to nutrient-dense leafy greens, find out how these foods can enhance your diet and overall wellness.",
+    desc: "A simple wash, a dry towel, and a little breathing room can keep market vegetables crisp through the week. Here is the quiet routine we use at home.",
   },
   {
     _id: 3,
     image: blog_3,
-    title: "Sustainable Eating: How to Make Eco-Friendly Food Choices",
+    title: "What is worth bringing home from the Saturday market",
     date: "October 5, 2023",
-    desc: "Learn how to make sustainable eating choices that benefit both your health and the environment. Discover tips on reducing food waste, choosing local and seasonal produce, and supporting eco-friendly farming practices.",
+    desc: "Look for firm stems, lively leaves, and the vegetables that are actually in season. A short market walk can shape a week of better, easier meals.",
   },
 ];
 

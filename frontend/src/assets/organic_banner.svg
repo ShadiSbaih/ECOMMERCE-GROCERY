@@ -1,0 +1,6 @@
+<svg width="240" height="60" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="60" rx="30" fill="#15803D" fill-opacity="0.1"/>
+  <path d="M40 30C40 21.7157 46.7157 15 55 15C63.2843 15 70 21.7157 70 30C70 38.2843 63.2843 45 55 45C46.7157 45 40 38.2843 40 30Z" fill="#166534"/>
+  <path d="M55 20C55 20 60 25 60 30C60 35 55 40 55 40C55 40 50 35 50 30C50 25 55 20 55 20Z" fill="#86EFAC"/>
+  <text x="82" y="35" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="13" fill="#14532D" letter-spacing="1">100% ORGANIC</text>
+</svg>
